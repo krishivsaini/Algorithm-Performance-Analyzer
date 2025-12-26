@@ -9,7 +9,6 @@
 
 const express = require('express');
 const cors = require('cors');
-const path = require('path');
 const { runBenchmark, getAvailableAlgorithms } = require('./benchmark');
 
 const app = express();
@@ -28,10 +27,6 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json());
 
-// Serve React build in production, or allow Vite dev server in development
-if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, '../client/dist')));
-}
 
 /**
  * GET /api/algorithms
@@ -92,14 +87,17 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', message: 'Algorithm Performance Analyzer API is running' });
 });
 
-/**
- * Serve frontend (React build in production)
- */
-if (process.env.NODE_ENV === 'production') {
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '../client/dist/index.html'));
+// Root route - API info
+app.get('/', (req, res) => {
+  res.json({
+    message: 'Algorithm Performance Analyzer API',
+    endpoints: {
+      algorithms: 'GET /api/algorithms',
+      benchmark: 'POST /api/benchmark',
+      health: 'GET /api/health'
+    }
   });
-}
+});
 
 // Start server
 app.listen(PORT, () => {
