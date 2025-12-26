@@ -1,0 +1,33 @@
+{
+  "name": "algorithm-performance-analyzer",
+  "version": "1.0.0",
+  "description": "A web-based application that empirically measures and visualizes the real-world execution time of classical algorithms",
+  "main": "server.js",
+  "scripts": {
+    "server": "node backend/server.js",
+    "server:dev": "nodemon backend/server.js",
+    "client": "cd client && npm run dev",
+    "client:build": "cd client && npm run build",
+    "client:install": "cd client && npm install",
+    "dev": "concurrently \"npm run server:dev\" \"npm run client\"",
+    "build": "npm run client:build",
+    "start": "NODE_ENV=production node backend/server.js",
+    "install:all": "npm install && npm run client:install"
+  },
+  "keywords": [
+    "algorithms",
+    "performance",
+    "benchmarking",
+    "visualization"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "cors": "^2.8.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1",
+    "concurrently": "^8.2.2"
+  }
+}
