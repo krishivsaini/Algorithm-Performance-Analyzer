@@ -1,18 +1,18 @@
 import { useState, useEffect } from 'react'
 
-function ControlSection({ selectedAlgorithm, onAlgorithmSelect, onBenchmark, isLoading }) {
+function ControlSection({ selectedAlgorithm, onAlgorithmSelect, onBenchmark, isLoading, apiBase = '' }) {
   const [algorithms, setAlgorithms] = useState([])
 
   useEffect(() => {
     // Fetch available algorithms from backend
-    fetch('/api/algorithms')
+    fetch(`${apiBase}/api/algorithms`)
       .then(res => res.json())
       .then(data => setAlgorithms(data.algorithms))
       .catch(error => {
         console.error('Error loading algorithms:', error)
-        alert('Failed to connect to the backend. Make sure the server is running on port 3000.')
+        alert('Failed to connect to the backend. Make sure the server is running.')
       })
-  }, [])
+  }, [apiBase])
 
   const handleSelectChange = (e) => {
     const algoId = e.target.value

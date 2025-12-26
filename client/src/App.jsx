@@ -6,6 +6,9 @@ import LoadingIndicator from './components/LoadingIndicator'
 import ResultsSection from './components/ResultsSection'
 import Footer from './components/Footer'
 
+// API base URL - uses environment variable in production, empty for local dev (proxy)
+const API_BASE = import.meta.env.VITE_API_URL || ''
+
 function App() {
   const [selectedAlgorithm, setSelectedAlgorithm] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
@@ -22,7 +25,7 @@ function App() {
     const algorithmName = selectedAlgorithm.name
 
     try {
-      const response = await fetch('/api/benchmark', {
+      const response = await fetch(`${API_BASE}/api/benchmark`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -57,6 +60,7 @@ function App() {
           onAlgorithmSelect={setSelectedAlgorithm}
           onBenchmark={handleBenchmark}
           isLoading={isLoading}
+          apiBase={API_BASE}
         />
         {isLoading && <LoadingIndicator />}
         {results && <ResultsSection results={results} algorithmName={benchmarkedAlgorithmName} />}
