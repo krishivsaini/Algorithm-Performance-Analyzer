@@ -6,9 +6,143 @@
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Algorithm Performance Analyzer</title>
+  <style>
+    /* Startup loader styles - shown while backend wakes up */
+    #startup-loader {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #f0f4ff 0%, #e8f0fe 50%, #f5f0ff 100%);
+      font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+      transition: opacity 0.5s ease, visibility 0.5s ease;
+    }
+
+    #startup-loader.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .loader-content {
+      text-align: center;
+    }
+
+    .loader-icon {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 24px;
+      background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 10px 40px rgba(37, 99, 235, 0.3);
+      animation: pulse-shadow 2s ease-in-out infinite;
+    }
+
+    .loader-icon svg {
+      width: 40px;
+      height: 40px;
+      fill: white;
+    }
+
+    .loader-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #1e293b;
+      margin-bottom: 8px;
+    }
+
+    .loader-subtitle {
+      font-size: 0.925rem;
+      color: #64748b;
+      margin-bottom: 32px;
+    }
+
+    .loader-dots {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+    }
+
+    .loader-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+      animation: bounce 1.4s ease-in-out infinite;
+    }
+
+    .loader-dot:nth-child(1) {
+      animation-delay: 0s;
+    }
+
+    .loader-dot:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+
+    .loader-dot:nth-child(3) {
+      animation-delay: 0.4s;
+    }
+
+    @keyframes bounce {
+
+      0%,
+      80%,
+      100% {
+        transform: scale(0.8);
+        opacity: 0.5;
+      }
+
+      40% {
+        transform: scale(1.2);
+        opacity: 1;
+      }
+    }
+
+    @keyframes pulse-shadow {
+
+      0%,
+      100% {
+        box-shadow: 0 10px 40px rgba(37, 99, 235, 0.3);
+      }
+
+      50% {
+        box-shadow: 0 15px 50px rgba(124, 58, 237, 0.4);
+      }
+    }
+
+    .loader-hint {
+      margin-top: 24px;
+      font-size: 0.8rem;
+      color: #94a3b8;
+    }
+  </style>
 </head>
 
 <body>
+  <!-- Startup loader - shows immediately while backend wakes up -->
+  <div id="startup-loader">
+    <div class="loader-content">
+      <div class="loader-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <path d="M3 3v18h18V3H3zm16 16H5V5h14v14zM7 7h2v10H7V7zm4 4h2v6h-2v-6zm4-2h2v8h-2V9z" />
+        </svg>
+      </div>
+      <h1 class="loader-title">Algorithm Performance Analyzer</h1>
+      <p class="loader-subtitle">Initializing analysis engine...</p>
+      <div class="loader-dots">
+        <div class="loader-dot"></div>
+        <div class="loader-dot"></div>
+        <div class="loader-dot"></div>
+      </div>
+      <p class="loader-hint">First load may take up to 30 seconds</p>
+    </div>
+  </div>
+
   <div id="root"></div>
   <script type="module" src="/src/main.jsx"></script>
 </body>
